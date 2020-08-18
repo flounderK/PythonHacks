@@ -1,3 +1,4 @@
+#!/usr/bin/python
 from opcode import opmap
 from types import CodeType
 import sys
@@ -43,14 +44,16 @@ def set_locals_as_globals(local_dict):
     return local_dict
 
 
-"""Example:
-
 def main():
     variable = 'hello'
 
-print(main())
-return_locals_patch(main)
-set_locals_as_globals(main())
-print(variable)
 
-"""
+if __name__ == '__main__':
+    print('Original call to main')
+    print(main())
+    print('patching main')
+    return_locals_patch(main)
+    set_locals_as_globals(main())
+    print("Printing varaible that should only be in main's scope")
+    print(variable)
+
