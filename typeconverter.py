@@ -5,10 +5,7 @@ import ctypes
 class TypeConverter(ctypes.Union):
     class NiceFieldRepr:
         def __repr__(self):
-            return " ".join(["%s: %s" % (k, hex(getattr(self, k)))
-                             if not isinstance(v, (ctypes.Structure, float))
-                             else "%s: %s" % (k, str(getattr(self, k)))
-                             for k, v in self._fields_])
+            return " ".join(["%s: 0x%x" % (k, getattr(self, k)) for k, v in self._fields_])
 
     class U32(ctypes.Structure, NiceFieldRepr):
         _fields_ = [("l", ctypes.c_uint32),
@@ -47,11 +44,11 @@ class TypeConverter(ctypes.Union):
                 ("f64", ctypes.c_double)]
 
     def __repr__(self):
-        return "\n".join(["%s: %s" % (k, hex(getattr(self, k)))
+        return "\n".join(["%s: %s" % (k, hex(getattr(self, k))
                           if not any([issubclass(v, ctypes.Structure),
                                       isinstance(getattr(self, k),
                                                  (float, ctypes.Structure))])
-                          else "%s: %s" % (k, str(getattr(self, k)))
+                          else str(getattr(self, k)))
                           for k, v in self._fields_])
 
 
