@@ -5,7 +5,7 @@ import ctypes
 class TypeConverter(ctypes.Union):
     class NiceFieldRepr:
         def __repr__(self):
-            return " ".join(["%s: 0x%x" % (k, getattr(self, k)) for k, v in self._fields_])
+            return " ".join(["%s: %#x" % (k, getattr(self, k)) for k, v in self._fields_])
 
     class U32(ctypes.Structure, NiceFieldRepr):
         _fields_ = [("l", ctypes.c_uint32),
